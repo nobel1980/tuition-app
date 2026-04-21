@@ -1,0 +1,74 @@
+[
+    {
+        "id": "1",
+        "slug": "primary",
+        "title": "Primary",
+        "price": "£7.99/hr",
+        "ageRange": "KS2 : 8 - 11 Years",
+        "features": [
+            "Groups of Three or Four : £7.99/hr",
+            "One to One : £25/hr"
+        ],
+        "image": "/images/courses/primary.jpg"
+    },
+    {
+        "id": "2",
+        "slug": "11-plus",
+        "title": "11 Plus",
+        "price": "£7.99/hr",
+        "ageRange": "KS2 : 8 - 11 Years",
+        "features": [
+            "Groups of Three or Four : £7.99/hr",
+            "One to One : £25/hr"
+        ],
+        "image": "/images/courses/11plus.jpg"
+    },
+    {
+        "id": "3",
+        "slug": "sats",
+        "title": "SATS",
+        "price": "£7.99/hr",
+        "ageRange": "KS2 : 11 - 16 Years",
+        "features": [
+            "Groups of Three or Four : £7.99/hr",
+            "One to One : £25/hr"
+        ],
+        "image": "/images/courses/sats.jpg"
+    },
+    {
+        "id": "4",
+        "slug": "ks3",
+        "title": "Year 7, 8 & 9",
+        "price": "£8.99/hr",
+        "ageRange": "KS3 : 11 - 16 Years",
+        "features": [
+            "Groups of Three or Four : £8.99/hr",
+            "One to One : £25/hr"
+        ],
+        "image": "/images/courses/ks3.jpg"
+    },
+    {
+        "id": "5",
+        "slug": "gcse",
+        "title": "GCSE",
+        "price": "£10.99/hr",
+        "ageRange": "KS4 : 11 - 19 Years",
+        "features": [
+            "Groups of Three or Four : £10.99/hr",
+            "One to One : £30/hr"
+        ],
+        "image": "/images/courses/gcse.jpg"
+    },
+    {
+        "id": "6",
+        "slug": "a-levels",
+        "title": "A-levels",
+        "price": "£12.99/hr",
+        "ageRange": "Age : 11 - 19 Years",
+        "features": [
+            "Groups of Three or Four : £11.99/hr",
+            "One to One : £35/hr"
+        ],
+        "image": "/images/courses/a-levels.jpg"
+    }
+]

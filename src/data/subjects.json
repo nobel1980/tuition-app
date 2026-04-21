@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "title": "Mathematics",
+        "keyStages": "KS2, KS3, KS4",
+        "icon": "calculator",
+        "image": "/images/service/2.jpg",
+        "description": "Mathematics is one of the most important subjects necessary for a child to exceed in. It helps children make sense of the numbers, patterns and shapes they see in the world around them. We specifically prepare students based on the national curriculum."
+    },
+    {
+        "id": 2,
+        "title": "English Literature",
+        "keyStages": "KS2, KS3, KS4",
+        "icon": "book-marked",
+        "image": "/images/service/3.jpg",
+        "description": "English Literature is an essential subject that students are required to pass in order to obtain a degree in higher education. It also allows students to further develop their communication skills."
+    },
+    {
+        "id": 3,
+        "title": "Statistics",
+        "keyStages": "KS3, KS4",
+        "icon": "bar-chart",
+        "image": "/images/service/4.jpg",
+        "description": "Statistics resources for teaching and learning mathematics in a fun way designed for teachers and students. Each worksheet is distinct and visually appealing."
+    },
+    {
+        "id": 4,
+        "title": "Science",
+        "keyStages": "KS2, KS3, KS4",
+        "icon": "microscope",
+        "image": "/images/service/5.jpg",
+        "description": "Science gives students the opportunity to gain a better understanding of how and why things function. Everything from Human anatomy to techniques of transportation, science reveals the mechanisms of complicated systems."
+    },
+    {
+        "id": 5,
+        "title": "English Language",
+        "keyStages": "KS2, KS3, KS4",
+        "icon": "languages",
+        "image": "/images/service/1.jpg",
+        "description": "English Language GCSE is used as a minimum requirement for many further education and job roles. It provides one of the strongest foundations for success as the language of business worldwide."
+    },
+    {
+        "id": 6,
+        "title": "GCSE Mathematics",
+        "keyStages": "KS3, KS4",
+        "icon": "atom",
+        "image": "/images/service/6.jpg",
+        "description": "GCSE Mathematics is fundamental for university entry. We aim to create easy learning steps for our students to grasp and consequently achieve success in mathematics."
+    }
+]
