@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { Book, Heart, GraduationCap, Target } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 const tabData = [
     {
@@ -47,8 +49,9 @@ export default function ServicesTab() {
                         {tabData.map((tab) => (
                             <button
                                 key={tab.id}
+                                type="button"
                                 onClick={() => setActiveTab(tab.id)}
-                                className={`flex items-center gap-4 p-5 rounded-xl text-left transition-all font-semibold ${activeTab === tab.id
+                                className={`flex items-center gap-4 p-5 rounded-xl text-left transition-all font-semibold cursor-pointer z-10 touch-manipulation ${activeTab === tab.id
                                         ? "bg-blue-900 text-white shadow-lg translate-x-2"
                                         : "bg-white text-slate-700 hover:bg-slate-100"
                                     }`}
@@ -70,12 +73,12 @@ export default function ServicesTab() {
                                     <p className="text-gray-600 leading-relaxed italic border-l-4 border-orange-500 pl-6">
                                         {content.description}
                                     </p>
-                                    <a href="/classes" className="inline-block text-blue-900 font-bold border-b-2 border-orange-500 hover:text-orange-500 transition-colors">
+                                    <Link href="/courses" className="inline-block text-blue-900 font-bold border-b-2 border-orange-500 hover:text-orange-500 transition-colors">
                                         View Classes
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="md:w-1/2">
-                                    <img src={content.image} alt={content.title} className="rounded-2xl shadow-lg h-64 w-full object-cover" />
+                                    <Image src={content.image} alt={content.title} width={400} height={300} className="rounded-2xl shadow-lg h-64 w-full object-cover" />
                                 </div>
                             </div>
                         ))}

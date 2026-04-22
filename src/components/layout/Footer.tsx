@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import Script from "next/script";
 import {
     MapPin,
@@ -24,9 +25,11 @@ export default function Footer() {
 
                     <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
                         <div className="hidden lg:block w-1/3">
-                            <img
+                            <Image
                                 src="/images/bg/promo-img.png"
                                 alt="Promo"
+                                width={400}
+                                height={300}
                                 className="w-full h-auto object-contain max-h-48"
                             />
                         </div>
@@ -56,7 +59,7 @@ export default function Footer() {
                         {/* Column 1: Logo & About */}
                         <div className="space-y-6">
                             <Link href="/">
-                                <img src="/images/footer-logo.png" alt="Ibrahim Tuition" className="h-12 w-auto mb-4" />
+                                <Image src="/images/footer-logo.png" alt="Ibrahim Tuition" width={200} height={48} className="h-12 w-auto mb-4" />
                             </Link>
                             <p className="leading-relaxed">
                                 Our focus is to teach students to emerge as independent, creative learners thereby encouraging their attitude towards academic learning.

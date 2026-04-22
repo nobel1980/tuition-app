@@ -57,7 +57,7 @@ export default function Testimonials({ reviews }: TestimonialsProps) {
         <div className="relative w-full max-w-4xl mx-auto">
             {/* Carousel Container */}
             <div className="overflow-hidden" ref={emblaRef}>
-                <div className="flex">
+                <div className="flex touch-pan-y">
                     {reviews.map((review, index) => (
                         <div key={index} className="flex-[0_0_100%] min-w-0 px-4">
                             <div className="bg-slate-800/40 backdrop-blur-md p-8 md:p-10 rounded-3xl border border-slate-700/50 shadow-2xl">

@@ -1,12 +1,13 @@
 import { constructMetadata } from "@/lib/seo";
 import CounterSection from "@/components/about/CounterSection";
 import ServicesTab from "@/components/about/ServicesTab";
-// import AboutTestimonials from "@/components/about/AboutTestimonials";
+import Link from "next/link";
+import Image from "next/image";
 
-export const metadata = constructMetadata(
-    "About Us",
-    "Ibrahim Tuition Centre is well known for teaching students from Key Stage 1 to A-Levels, delivering extraordinary teaching across all stages."
-);
+export const metadata = constructMetadata({
+    title: "About Us",
+    description: "Ibrahim Tuition Centre is well known for teaching students from Key Stage 1 to A-Levels, delivering extraordinary teaching across all stages."
+});
 
 export default function AboutPage() {
     return (
@@ -20,7 +21,7 @@ export default function AboutPage() {
                 <div className="relative z-10 container mx-auto px-4">
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">About Us</h2>
                     <div className="flex justify-center gap-2 text-gray-300">
-                        <a href="/" className="hover:text-orange-500 transition-colors">Home</a>
+                        <Link href="/" className="hover:text-orange-500 transition-colors">Home</Link>
                         <span>/</span>
                         <span className="text-orange-500">About</span>
                     </div>
@@ -32,9 +33,11 @@ export default function AboutPage() {
                 <div className="container mx-auto px-4">
                     <div className="flex flex-col lg:flex-row items-center gap-12">
                         <div className="lg:w-1/2">
-                            <img
+                            <Image
                                 src="/images/bg/about-img.png"
                                 alt="About Ibrahim Tuition"
+                                width={600}
+                                height={400}
                                 className="w-full h-auto rounded-2xl shadow-xl"
                             />
                         </div>

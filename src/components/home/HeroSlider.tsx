@@ -31,7 +31,7 @@ export default function HeroSlider() {
 
     return (
         <section className="overflow-hidden" ref={emblaRef}>
-            <div className="flex">
+            <div className="flex touch-pan-y">
                 {slides.map((slide) => (
                     <div
                         key={slide.id}

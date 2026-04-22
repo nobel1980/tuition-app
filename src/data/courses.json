@@ -1,74 +1,155 @@
 [
     {
         "id": "1",
-        "slug": "primary",
         "title": "Primary",
-        "price": "£7.99/hr",
-        "ageRange": "KS2 : 8 - 11 Years",
-        "features": [
-            "Groups of Three or Four : £7.99/hr",
-            "One to One : £25/hr"
+        "slug": "primary-ks2-tuition-london",
+        "seoTitle": "Primary KS2 Tuition & Exam Prep | London | Ibrahim Tuition",
+        "seoDescription": "Expert Primary KS2 tutoring for ages 8-11. Focus on English, Maths, and reasoning to build a strong fundamental basis for future academic success.",
+        "ageRange": "8-11 years",
+        "startingPrice": "£7.99/hr",
+        "rating": 4,
+        "image": "/images/courses/primary.jpg",
+        "ogImage": "/images/og/primary-tuition.jpg",
+        "bannerImage": "/images/bg/banner-bg-5.jpg",
+        "overview": "It is the primary set of exams that forms the fundamental basis for your child’s future grade predictions. These exams test core skills and knowledge.",
+        "subjects": [
+            "English",
+            "Maths",
+            "Verbal reasoning",
+            "Non-verbal reasoning"
         ],
-        "image": "/images/courses/primary.jpg"
+        "description": "We get children up to the correct standard and levels so they are ready for future learning.",
+        "fees": {
+            "group": "£7.99/hour",
+            "oneToOne": "£25/hour"
+        },
+        "teacherId": "t1"
     },
     {
         "id": "2",
-        "slug": "11-plus",
         "title": "11 Plus",
-        "price": "£7.99/hr",
-        "ageRange": "KS2 : 8 - 11 Years",
-        "features": [
-            "Groups of Three or Four : £7.99/hr",
-            "One to One : £25/hr"
+        "slug": "11-plus-exam-preparation-london",
+        "seoTitle": "11 Plus Exam Preparation & Grammar School Entry | London",
+        "seoDescription": "Specialist 11 Plus tutoring in London. We focus on exam techniques, knowledge gaps, and past paper practice for Grammar school success.",
+        "ageRange": "8-11 years",
+        "startingPrice": "£7.99/hr",
+        "rating": 5,
+        "image": "/images/courses/11plus.jpg",
+        "ogImage": "/images/og/11plus-prep.jpg",
+        "bannerImage": "/images/bg/banner-bg-5.jpg",
+        "overview": "11 plus is a challenging test which helps students secure a place at grammar schools and high-quality institutions.",
+        "subjects": [
+            "English",
+            "Maths",
+            "Verbal reasoning",
+            "Non-verbal reasoning"
         ],
-        "image": "/images/courses/11plus.jpg"
+        "description": "Concentration is placed on exam technique and identifying knowledge gaps.",
+        "fees": {
+            "group": "£7.99/hour",
+            "oneToOne": "£25/hour"
+        },
+        "teacherId": "t1"
     },
     {
         "id": "3",
-        "slug": "sats",
-        "title": "SATS",
-        "price": "£7.99/hr",
-        "ageRange": "KS2 : 11 - 16 Years",
-        "features": [
-            "Groups of Three or Four : £7.99/hr",
-            "One to One : £25/hr"
+        "title": "A-Level",
+        "slug": "a-level-tutoring-maths-science-london",
+        "seoTitle": "A-Level Tutoring | Maths, Biology, Chemistry & Physics | London",
+        "seoDescription": "Intensive A-Level support for students aged 11-19. Boost your UCAS predictive grades with tutors from UCL and Imperial College.",
+        "ageRange": "11-19 years",
+        "startingPrice": "£12.99/hr",
+        "rating": 5,
+        "image": "/images/courses/alevel.jpg",
+        "ogImage": "/images/og/alevel-tuition.jpg",
+        "bannerImage": "/images/bg/banner-bg-5.jpg",
+        "overview": "A-Levels are heavy on content and completed quickly compared to GCSE exams. Crucial for University.",
+        "subjects": [
+            "Biology",
+            "Chemistry",
+            "Physics",
+            "Maths"
         ],
-        "image": "/images/courses/sats.jpg"
+        "description": "Tutors from UCL and Imperial help boost UCAS predictive grades.",
+        "fees": {
+            "group": "£12.99/hour",
+            "oneToOne": "£35/hour"
+        },
+        "teacherId": "t1"
     },
     {
         "id": "4",
-        "slug": "ks3",
-        "title": "Year 7, 8 & 9",
-        "price": "£8.99/hr",
-        "ageRange": "KS3 : 11 - 16 Years",
-        "features": [
-            "Groups of Three or Four : £8.99/hr",
-            "One to One : £25/hr"
+        "title": "GCSE",
+        "slug": "gcse-maths-english-science-london",
+        "seoTitle": "GCSE Tutoring London | Achieve Grade 9 in Maths & English",
+        "seoDescription": "Professional GCSE tutoring for all core subjects. Personalized learning plans to help students achieve high grades for university admission.",
+        "ageRange": "11-19 years",
+        "startingPrice": "£10.99/hr",
+        "rating": 4,
+        "image": "/images/courses/gcse.jpg",
+        "ogImage": "/images/og/gcse-london.jpg",
+        "bannerImage": "/images/bg/banner-bg-5.jpg",
+        "overview": "Success in GCSE Maths and English is pivotal for employment and further education in the UK.",
+        "subjects": [
+            "English",
+            "Maths",
+            "Science"
         ],
-        "image": "/images/courses/ks3.jpg"
+        "description": "Focused teaching to help students reach Grade 9.",
+        "fees": {
+            "group": "£10.10.99/hour",
+            "oneToOne": "£30/hour"
+        },
+        "teacherId": "t1"
     },
     {
         "id": "5",
-        "slug": "gcse",
-        "title": "GCSE",
-        "price": "£10.99/hr",
-        "ageRange": "KS4 : 11 - 19 Years",
-        "features": [
-            "Groups of Three or Four : £10.99/hr",
-            "One to One : £30/hr"
+        "title": "SATS",
+        "slug": "ks2-sats-preparation-classes",
+        "seoTitle": "KS2 SATS Preparation Classes | Boost Student Confidence",
+        "seoDescription": "Targeted SATS support in Reading, Maths, and SPAG. Mock testing and curriculum mastery to ensure high performance in year 6.",
+        "ageRange": "11-16 years",
+        "startingPrice": "£7.99/hr",
+        "rating": 4,
+        "image": "/images/courses/sats.jpg",
+        "ogImage": "/images/og/sats-prep.jpg",
+        "bannerImage": "/images/bg/banner-bg-5.jpg",
+        "overview": "SATS are key indicators of progress at the end of Key Stages. We provide targeted support.",
+        "subjects": [
+            "Reading",
+            "Maths",
+            "SPAG"
         ],
-        "image": "/images/courses/gcse.jpg"
+        "description": "Building confidence through mock testing and curriculum mastery.",
+        "fees": {
+            "group": "£7.99/hour",
+            "oneToOne": "£25/hour"
+        },
+        "teacherId": "t1"
     },
     {
         "id": "6",
-        "slug": "a-levels",
-        "title": "A-levels",
-        "price": "£12.99/hr",
-        "ageRange": "Age : 11 - 19 Years",
-        "features": [
-            "Groups of Three or Four : £11.99/hr",
-            "One to One : £35/hr"
+        "title": "Secondary",
+        "slug": "ks3-secondary-school-tutoring",
+        "seoTitle": "Secondary KS3 Tutoring | Building Core Academic Strength",
+        "seoDescription": "Bridging the gap between Primary and GCSE. Specialist KS3 support based on the National Curriculum for English, Maths, and Science.",
+        "ageRange": "11-16 years",
+        "startingPrice": "£7.99/hr",
+        "rating": 4,
+        "image": "/images/courses/secondary.jpg",
+        "ogImage": "/images/og/secondary-ks3.jpg",
+        "bannerImage": "/images/bg/banner-bg-5.jpg",
+        "overview": "Secondary education bridges the gap between Primary and GCSE. We focus on core strength.",
+        "subjects": [
+            "English",
+            "Maths",
+            "Science"
         ],
-        "image": "/images/courses/a-levels.jpg"
+        "description": "Tailored materials for KS3 students based on the National Curriculum.",
+        "fees": {
+            "group": "£7.99/hour",
+            "oneToOne": "£25/hour"
+        },
+        "teacherId": "t1"
     }
 ]

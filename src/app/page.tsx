@@ -4,15 +4,16 @@ import CourseCard from "@/components/home/CourseCard";
 import Testimonials from "@/components/home/Testimonials";
 import FAQ from "@/components/home/FAQ";
 import { constructMetadata } from "@/lib/seo";
+import Image from "next/image";
 
 // Data Imports (Replace with API calls in Phase 2)
 import courses from "@/data/courses.json";
 import reviews from "@/data/reviews.json";
 
-export const metadata = constructMetadata(
-  "Home",
-  "Tailored learning experiences in Maths, English, and Science for academic success."
-);
+export const metadata = constructMetadata({
+  title: "Home",
+  description: "Tailored learning experiences in Maths, English, and Science for academic success."
+});
 
 export default async function HomePage() {
   return (
@@ -42,9 +43,12 @@ export default async function HomePage() {
           </div>
           <div className="md:w-1/2">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img
+              <Image
                 src="/images/bg/home-about-img.jpg"
                 alt="Students studying"
+                width={800}
+                height={600}
+                priority
                 className="w-full h-auto object-cover"
               />
             </div>

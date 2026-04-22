@@ -1,5 +1,6 @@
 import SubjectCard from '@/components/subjects/SubjectCard';
 import subjectsData from '@/data/subjects.json';
+import Link from 'next/link';
 
 export default function SubjectsPage() {
     return (
@@ -9,7 +10,7 @@ export default function SubjectsPage() {
                 <div className="container mx-auto px-4">
                     <h2 className="text-4xl font-bold mb-4">Subjects</h2>
                     <nav className="text-sm font-medium">
-                        <a href="/" className="hover:text-orange-400">Home</a>
+                        <Link href="/" className="hover:text-orange-400">Home</Link>
                         <span className="mx-2">/</span>
                         <span className="text-orange-400">Subject List</span>
                     </nav>

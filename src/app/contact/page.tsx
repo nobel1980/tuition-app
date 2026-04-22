@@ -2,11 +2,12 @@ import ContactForm from "@/components/contact/ContactForm";
 import ContactInfo from "@/components/contact/ContactInfo";
 import { constructMetadata } from "@/lib/seo";
 import { MapPin, Mail, Phone, Clock } from "lucide-react";
+import Link from "next/link";
 
-export const metadata = constructMetadata(
-    "Contact Us",
-    "Get in touch with Ibrahim Tuition Centre for inquiries about our primary, 11 Plus, and GCSE courses."
-);
+export const metadata = constructMetadata({
+    title: "Contact Us",
+    description: "Get in touch with Ibrahim Tuition Centre for inquiries about our primary, 11 Plus, and GCSE courses."
+});
 
 export default function ContactPage() {
     return (
@@ -20,7 +21,7 @@ export default function ContactPage() {
                 <div className="relative z-10 container mx-auto px-4">
                     <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Contact Us</h2>
                     <div className="flex justify-center gap-2 text-gray-300">
-                        <a href="/" className="hover:text-orange-500 transition-colors">Home</a>
+                        <Link href="/" className="hover:text-orange-500 transition-colors">Home</Link>
                         <span>/</span>
                         <span className="text-orange-500">Contact</span>
                     </div>
