@@ -3,6 +3,8 @@ import { Inter, Dosis } from "next/font/google";
 import "@/app/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import CookieBanner from "@/components/layout/CookieBanner";
+import GoogleAnalytics from "@/components/scripts/GoogleAnalytics";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const dosis = Dosis({ subsets: ["latin"], variable: "--font-dosis", display: "swap" });
@@ -100,6 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${dosis.variable} scroll-smooth`}>
       <head>
+        <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID!} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -109,6 +112,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />
+        <CookieBanner />
       </body>
     </html>
   );
