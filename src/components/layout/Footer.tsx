@@ -59,7 +59,13 @@ export default function Footer() {
                         {/* Column 1: Logo & About */}
                         <div className="space-y-6">
                             <Link href="/">
-                                <Image src="/images/footer-logo.png" alt="Ibrahim Tuition" width={200} height={48} className="h-12 w-auto mb-4" />
+                                <Image
+                                    src="/images/footer-logo.png"
+                                    alt="Ibrahim Tuition Logo"
+                                    width={200}
+                                    height={60}
+                                    className="h-10 w-auto"
+                                />
                             </Link>
                             <p className="leading-relaxed">
                                 Our focus is to teach students to emerge as independent, creative learners thereby encouraging their attitude towards academic learning.

@@ -1,10 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Dosis } from "next/font/google";
+import { Inter, Dosis, Geist } from "next/font/google";
 import "@/app/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CookieBanner from "@/components/layout/CookieBanner";
 import GoogleAnalytics from "@/components/scripts/GoogleAnalytics";
+import { cn } from "@/lib/utils";
+import { TooltipProvider } from "@/components/ui/tooltip";
+
+const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 const dosis = Dosis({ subsets: ["latin"], variable: "--font-dosis", display: "swap" });
@@ -100,7 +104,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <html lang="en" className={`${inter.variable} ${dosis.variable} scroll-smooth`}>
+    <html
+      lang="en"
+      className={cn("scroll-smooth", inter.variable, dosis.variable, "font-sans", geist.variable)}
+      data-scroll-behavior="smooth"
+    >
       <head>
         <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID!} />
         <script
@@ -109,10 +117,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="antialiased text-slate-900 bg-white min-h-screen flex flex-col font-inter">
-        <Navbar />
-        <main className="flex-grow">{children}</main>
-        <Footer />
-        <CookieBanner />
+        <TooltipProvider>
+          <Navbar />
+          <main className="flex-grow">{children}</main>
+          <Footer />
+          <CookieBanner />
+        </TooltipProvider>
       </body>
     </html>
   );

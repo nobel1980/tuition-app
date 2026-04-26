@@ -1,0 +1,78 @@
+{
+  "users": [
+    {
+      "id": "u1",
+      "name": "Admin User",
+      "email": "admin@ibrahimtuition.co.uk",
+      "password": "password123",
+      "role": "admin"
+    },
+    {
+      "id": "u2",
+      "name": "Sarah Connor",
+      "email": "sarah.teacher@example.com",
+      "password": "password123",
+      "role": "teacher"
+    },
+    {
+      "id": "u3",
+      "name": "John Doe",
+      "email": "john.student@example.com",
+      "password": "password123",
+      "role": "student"
+    }
+  ],
+  "students": [
+    {
+      "id": "s1",
+      "userId": "u3",
+      "name": "John Doe",
+      "level": "GCSE Maths",
+      "progress": 75,
+      "feeStatus": "Paid",
+      "nextLesson": {
+        "time": "2024-05-15T16:00:00Z",
+        "teacher": "Sarah Connor",
+        "link": "https://zoom.us/j/123456789"
+      },
+      "homework": [
+        { "id": "hw1", "title": "Algebra Worksheet 1", "url": "#", "status": "Pending" },
+        { "id": "hw2", "title": "Geometry Basics", "url": "#", "status": "Completed" }
+      ]
+    }
+  ],
+  "teachers": [
+    {
+      "id": "t1",
+      "userId": "u2",
+      "name": "Sarah Connor",
+      "subjects": ["Maths", "Physics"],
+      "schedule": [
+        { "id": "sch1", "time": "16:00", "student": "John Doe", "subject": "GCSE Maths" },
+        { "id": "sch2", "time": "17:00", "student": "Jane Smith", "subject": "11 Plus Maths" }
+      ],
+      "roster": ["s1"]
+    }
+  ],
+  "classes": [
+    {
+      "id": "c1",
+      "subject": "GCSE Maths",
+      "teacherId": "t1",
+      "students": ["s1"],
+      "time": "Monday 16:00"
+    }
+  ],
+  "stats": {
+    "totalRevenue": 45000,
+    "totalStudents": 120,
+    "revenueData": [
+      { "month": "Jan", "revenue": 4000 },
+      { "month": "Feb", "revenue": 3000 },
+      { "month": "Mar", "revenue": 2000 },
+      { "month": "Apr", "revenue": 2780 },
+      { "month": "May", "revenue": 1890 },
+      { "month": "Jun", "revenue": 2390 }
+    ]
+  }
+}
