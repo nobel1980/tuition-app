@@ -3,6 +3,7 @@ import CounterSection from "@/components/about/CounterSection";
 import ServicesTab from "@/components/about/ServicesTab";
 import Link from "next/link";
 import Image from "next/image";
+import GoogleReviews from "@/components/GoogleReviews";
 
 export const metadata = constructMetadata({
     title: "About Us",
@@ -72,7 +73,7 @@ export default function AboutPage() {
 
             <CounterSection />
             <ServicesTab />
-            {/* <AboutTestimonials /> */}
+            <GoogleReviews />
         </main>
     );
 }
