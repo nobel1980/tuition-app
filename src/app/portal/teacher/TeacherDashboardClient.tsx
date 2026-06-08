@@ -1,17 +1,40 @@
 'use client';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
+import { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Calendar as CalendarIcon, Clock, Users, BookOpen } from 'lucide-react';
-import { teacherUpdateAttendance, teacherSaveNotes } from '@/app/portal/actions';
+import { Clock, Users, BookOpen } from 'lucide-react';
+import { updateStudent, getAllStudents } from '@/lib/clientDb';
 
 export default function TeacherDashboardClient({ teacher, students }: any) {
+  const [localStudents, setLocalStudents] = useState(students);
   const schedule = teacher.schedule || [];
+
+  async function handleToggleAttendance(studentId: string, currentAttendance: boolean) {
+    await updateStudent(studentId, { lastAttendance: !currentAttendance });
+    const allStudents = await getAllStudents();
+    const rosterIds = teacher.roster || [];
+    const updatedRoster = allStudents.filter((s: any) => rosterIds.includes(s.id));
+    setLocalStudents(updatedRoster);
+  }
+
+  async function handleSaveNotes(e: React.FormEvent<HTMLFormElement>, studentId: string) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const notes = formData.get('notes') as string;
+    
+    await updateStudent(studentId, { teacherNotes: notes });
+    alert('Notes saved successfully!');
+    
+    const allStudents = await getAllStudents();
+    const rosterIds = teacher.roster || [];
+    const updatedRoster = allStudents.filter((s: any) => rosterIds.includes(s.id));
+    setLocalStudents(updatedRoster);
+  }
 
   return (
     <div className="space-y-6">
@@ -36,7 +59,7 @@ export default function TeacherDashboardClient({ teacher, students }: any) {
             <Users className="h-4 w-4 text-slate-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{students.length}</div>
+            <div className="text-2xl font-bold">{localStudents.length}</div>
           </CardContent>
         </Card>
       </div>
@@ -49,7 +72,7 @@ export default function TeacherDashboardClient({ teacher, students }: any) {
         
         <TabsContent value="roster" className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {students.map((student: any) => (
+            {localStudents.map((student: any) => (
               <Card key={student.id}>
                 <CardHeader className="pb-2">
                   <div className="flex justify-between items-start">
@@ -64,18 +87,15 @@ export default function TeacherDashboardClient({ teacher, students }: any) {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center space-x-2">
-                    <form action={async () => {
-                      await teacherUpdateAttendance(student.id, !student.lastAttendance);
-                    }}>
-                      <Button type="submit" variant="outline" size="sm">
-                        Mark {student.lastAttendance ? 'Absent' : 'Present'}
-                      </Button>
-                    </form>
+                    <Button 
+                      onClick={() => handleToggleAttendance(student.id, student.lastAttendance)} 
+                      variant="outline" 
+                      size="sm"
+                    >
+                      Mark {student.lastAttendance ? 'Absent' : 'Present'}
+                    </Button>
                   </div>
-                  <form action={async (formData) => {
-                    const notes = formData.get('notes') as string;
-                    await teacherSaveNotes(student.id, notes);
-                  }}>
+                  <form onSubmit={(e) => handleSaveNotes(e, student.id)}>
                     <div className="space-y-2">
                       <Label htmlFor={`notes-${student.id}`}>Private Notes</Label>
                       <Textarea 
@@ -91,7 +111,7 @@ export default function TeacherDashboardClient({ teacher, students }: any) {
                 </CardContent>
               </Card>
             ))}
-            {students.length === 0 && <p>No students assigned.</p>}
+            {localStudents.length === 0 && <p>No students assigned.</p>}
           </div>
         </TabsContent>
 

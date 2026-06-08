@@ -3,25 +3,89 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { Users, BookOpen, TrendingUp, Search, Plus, Trash2, Edit } from 'lucide-react';
+import { Users, BookOpen, TrendingUp, Search, Plus, Trash2 } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { adminAddUser, adminDeleteUser, adminAddClass, adminDeleteClass, adminUpdateFeeStatus } from '@/app/portal/actions';
+import { 
+  createUser, deleteUser, 
+  createClass, deleteClass, 
+  updateStudent, getAllUsers, 
+  getClasses, getAllStudents 
+} from '@/lib/clientDb';
 
 export default function AdminDashboardClient({ initialStats, initialUsers, initialStudents, initialClasses }: any) {
   const [search, setSearch] = useState('');
+  const [users, setUsers] = useState(initialUsers);
+  const [students, setStudents] = useState(initialStudents);
+  const [classes, setClasses] = useState(initialClasses);
   
-  const filteredUsers = initialUsers.filter((u: any) =>
+  const filteredUsers = users.filter((u: any) =>
     u.name.toLowerCase().includes(search.toLowerCase()) ||
     u.email.toLowerCase().includes(search.toLowerCase())
   );
 
-  const filteredStudents = initialStudents.filter((s: any) =>
+  const filteredStudents = students.filter((s: any) =>
     s.name.toLowerCase().includes(search.toLowerCase())
   );
+
+  async function handleAddUser(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const role = formData.get('role') as string;
+    
+    await createUser({ name, email, password, role });
+    
+    const updatedUsers = await getAllUsers();
+    setUsers(updatedUsers);
+    e.currentTarget.reset();
+  }
+
+  async function handleDeleteUser(id: string) {
+    if (confirm('Are you sure you want to delete this user?')) {
+      await deleteUser(id);
+      const updatedUsers = await getAllUsers();
+      setUsers(updatedUsers);
+    }
+  }
+
+  async function handleAddClass(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const subject = formData.get('subject') as string;
+    const teacherId = formData.get('teacherId') as string;
+    const time = formData.get('time') as string;
+
+    await createClass({ subject, teacherId, students: [], time });
+    
+    const updatedClasses = await getClasses();
+    setClasses(updatedClasses);
+    e.currentTarget.reset();
+  }
+
+  async function handleDeleteClass(id: string) {
+    if (confirm('Are you sure you want to delete this class?')) {
+      await deleteClass(id);
+      const updatedClasses = await getClasses();
+      setClasses(updatedClasses);
+    }
+  }
+
+  async function handleUpdateFeeStatus(e: React.FormEvent<HTMLFormElement>, studentId: string) {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const feeStatus = formData.get('feeStatus') as string;
+    
+    await updateStudent(studentId, { feeStatus });
+    
+    const updatedStudents = await getAllStudents();
+    setStudents(updatedStudents);
+  }
 
   return (
     <div className="space-y-6">
@@ -78,7 +142,7 @@ export default function AdminDashboardClient({ initialStats, initialUsers, initi
                 <BookOpen className="h-4 w-4 text-slate-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{initialClasses?.length}</div>
+                <div className="text-2xl font-bold">{classes?.length}</div>
                 <p className="text-xs text-slate-500">Scheduled sessions</p>
               </CardContent>
             </Card>
@@ -111,7 +175,7 @@ export default function AdminDashboardClient({ initialStats, initialUsers, initi
                 <CardTitle>User Management</CardTitle>
                 <CardDescription>Manage roles and permissions.</CardDescription>
               </div>
-              <form action={adminAddUser} className="flex gap-2">
+              <form onSubmit={handleAddUser} className="flex gap-2">
                 <Input name="name" placeholder="Name" required className="w-32" />
                 <Input name="email" type="email" placeholder="Email" required className="w-40" />
                 <Input name="password" type="password" placeholder="Pass" required className="w-24" />
@@ -144,12 +208,14 @@ export default function AdminDashboardClient({ initialStats, initialUsers, initi
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
-                        <form action={adminDeleteUser}>
-                          <input type="hidden" name="id" value={user.id} />
-                          <Button type="submit" variant="ghost" size="sm" className="text-red-500 hover:text-red-700">
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </form>
+                        <Button 
+                          onClick={() => handleDeleteUser(user.id)} 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -186,8 +252,7 @@ export default function AdminDashboardClient({ initialStats, initialUsers, initi
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">
-                        <form action={adminUpdateFeeStatus} className="flex justify-end gap-2">
-                          <input type="hidden" name="id" value={student.id} />
+                        <form onSubmit={(e) => handleUpdateFeeStatus(e, student.id)} className="flex justify-end gap-2">
                           <select name="feeStatus" defaultValue={student.feeStatus} className="border rounded px-2 text-sm">
                             <option value="Paid">Paid</option>
                             <option value="Unpaid">Unpaid</option>
@@ -211,7 +276,7 @@ export default function AdminDashboardClient({ initialStats, initialUsers, initi
                 <CardTitle>Class Schedule</CardTitle>
                 <CardDescription>Manage classes and assignments.</CardDescription>
               </div>
-              <form action={adminAddClass} className="flex gap-2">
+              <form onSubmit={handleAddClass} className="flex gap-2">
                 <Input name="subject" placeholder="Subject" required className="w-32" />
                 <Input name="teacherId" placeholder="Teacher ID" required className="w-24" />
                 <Input name="time" placeholder="Time (e.g. Mon 16:00)" required className="w-40" />
@@ -229,18 +294,20 @@ export default function AdminDashboardClient({ initialStats, initialUsers, initi
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {initialClasses?.map((cls: any) => (
+                  {classes?.map((cls: any) => (
                     <TableRow key={cls.id}>
                       <TableCell className="font-medium">{cls.subject}</TableCell>
                       <TableCell>{cls.teacherId}</TableCell>
                       <TableCell>{cls.time}</TableCell>
                       <TableCell className="text-right">
-                        <form action={adminDeleteClass}>
-                          <input type="hidden" name="id" value={cls.id} />
-                          <Button type="submit" variant="ghost" size="sm" className="text-red-500 hover:text-red-700">
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        </form>
+                        <Button 
+                          onClick={() => handleDeleteClass(cls.id)} 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-red-500 hover:text-red-700"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}

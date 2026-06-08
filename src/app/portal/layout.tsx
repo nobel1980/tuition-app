@@ -1,20 +1,39 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { SidebarProvider, SidebarTrigger, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarFooter } from '@/components/ui/sidebar';
 import { Home, Users, BookOpen, Calendar, Settings, LogOut, CheckSquare, GraduationCap, DollarSign, LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
-import { logout } from '@/app/login/actions';
 import { Button } from '@/components/ui/button';
 
-export default async function PortalLayout({ children }: { children: React.ReactNode }) {
-  const cookieStore = await cookies();
-  const sessionData = cookieStore.get('mock_session')?.value;
-  
-  if (!sessionData) {
-    redirect('/login');
+export default function PortalLayout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  const [session, setSession] = useState<{ id: string; role: string; name: string } | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const sessionData = localStorage.getItem('ibt_mock_session');
+    if (!sessionData) {
+      router.push('/login');
+    } else {
+      setSession(JSON.parse(sessionData));
+      setLoading(false);
+    }
+  }, [router]);
+
+  function handleLogout() {
+    localStorage.removeItem('ibt_mock_session');
+    router.push('/login');
   }
 
-  const session = JSON.parse(sessionData);
+  if (loading || !session) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-slate-50">
+        <p className="text-slate-500 font-medium animate-pulse">Loading portal...</p>
+      </div>
+    );
+  }
 
   // Role-based navigation
   let navItems: { title: string, url: string, icon: any }[] = [];
@@ -75,12 +94,10 @@ export default async function PortalLayout({ children }: { children: React.React
               <p className="text-sm font-semibold">{session.name}</p>
               <p className="text-xs text-slate-500 capitalize">{session.role}</p>
             </div>
-            <form action={logout}>
-              <Button variant="outline" className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50">
-                <LogOut className="w-4 h-4 mr-2" />
-                Sign Out
-              </Button>
-            </form>
+            <Button onClick={handleLogout} variant="outline" className="w-full justify-start text-red-600 hover:text-red-700 hover:bg-red-50">
+              <LogOut className="w-4 h-4 mr-2" />
+              Sign Out
+            </Button>
           </SidebarFooter>
         </Sidebar>
 

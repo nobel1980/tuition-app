@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { authenticate } from './actions';
+import { login as clientLogin } from '@/lib/clientDb';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -18,13 +18,24 @@ export default function LoginPage() {
   async function handleSubmit(formData: FormData) {
     setLoading(true);
     setError(null);
-    const result = await authenticate(formData);
-    setLoading(false);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
 
-    if (result.error) {
-      setError(result.error);
-    } else if (result.success && result.role) {
-      router.push(`/portal/${result.role}`);
+    try {
+      const user = await clientLogin(email, password);
+      
+      // Store session in localStorage
+      localStorage.setItem('ibt_mock_session', JSON.stringify({
+        id: user.id,
+        role: user.role,
+        name: user.name
+      }));
+      
+      setLoading(false);
+      router.push(`/portal/${user.role}`);
+    } catch (err: any) {
+      setLoading(false);
+      setError(err?.message || 'Invalid credentials');
     }
   }
 
