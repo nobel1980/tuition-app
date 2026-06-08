@@ -106,8 +106,18 @@ export default function PortalLayout({ children }: { children: React.ReactNode }
             <SidebarTrigger />
             <h1 className="font-semibold text-lg capitalize">{session.role} Dashboard</h1>
           </header>
-          <div className="flex-1 p-6">
-            {children}
+          <div className="flex-1 p-6 flex flex-col justify-between">
+            <div className="flex-1">
+              {children}
+            </div>
+            <footer className="mt-8 pt-4 border-t border-slate-200 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-2">
+              <p>Copyright © {new Date().getFullYear()} <span className="font-semibold text-blue-900">Ibrahim Tuition Centre</span> | All Rights Reserved</p>
+              <div className="flex gap-4 font-medium">
+                <Link href="/" className="hover:text-slate-800 transition-colors">Main Site</Link>
+                <Link href="/privacy" className="hover:text-slate-800 transition-colors">Privacy Policy</Link>
+                <Link href="/contact" className="hover:text-slate-800 transition-colors">Support</Link>
+              </div>
+            </footer>
           </div>
         </main>
       </div>

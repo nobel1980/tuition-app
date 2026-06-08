@@ -14,6 +14,7 @@ export default function Navbar() {
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
     const pathname = usePathname();
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const [portalUrl, setPortalUrl] = useState<string | null>(null);
 
     // 1. Handle Scroll Effect (Keeping your design)
     useEffect(() => {
@@ -21,6 +22,25 @@ export default function Navbar() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    // Load portal session client-side
+    useEffect(() => {
+        const sessionData = localStorage.getItem('ibt_mock_session');
+        if (sessionData) {
+            try {
+                const session = JSON.parse(sessionData);
+                if (session && session.role) {
+                    setPortalUrl(`/portal/${session.role}`);
+                    return;
+                }
+            } catch (e) {}
+        }
+        setPortalUrl(null);
+    }, [pathname]);
+
+    if (pathname && pathname.startsWith('/portal')) {
+        return null;
+    }
 
     // 2. Close menus on route change or outside click
     useEffect(() => {
@@ -118,12 +138,21 @@ export default function Navbar() {
                         </div>
                     ))}
 
-                    <Link
-                        href="/login"
-                        className="bg-blue-900 hover:bg-orange-600 transition-all text-white px-7 py-2.5 rounded-full font-bold shadow-lg shadow-blue-900/20 active:scale-95"
-                    >
-                        Login
-                    </Link>
+                    {portalUrl ? (
+                        <Link
+                            href={portalUrl}
+                            className="bg-orange-500 hover:bg-blue-900 transition-all text-white px-7 py-2.5 rounded-full font-bold shadow-lg shadow-orange-500/20 active:scale-95"
+                        >
+                            Portal
+                        </Link>
+                    ) : (
+                        <Link
+                            href="/login"
+                            className="bg-blue-900 hover:bg-orange-600 transition-all text-white px-7 py-2.5 rounded-full font-bold shadow-lg shadow-blue-900/20 active:scale-95"
+                        >
+                            Login
+                        </Link>
+                    )}
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -176,12 +205,21 @@ export default function Navbar() {
                                     )}
                                 </div>
                             ))}
-                            <Link
-                                href="/login"
-                                className="w-full text-center bg-blue-900 text-white py-4 rounded-2xl font-black text-lg shadow-xl"
-                            >
-                                Student Portal Login
-                            </Link>
+                            {portalUrl ? (
+                                <Link
+                                    href={portalUrl}
+                                    className="w-full text-center bg-orange-500 text-white py-4 rounded-2xl font-black text-lg shadow-xl"
+                                >
+                                    Go to Portal
+                                </Link>
+                            ) : (
+                                <Link
+                                    href="/login"
+                                    className="w-full text-center bg-blue-900 text-white py-4 rounded-2xl font-black text-lg shadow-xl"
+                                >
+                                    Student Portal Login
+                                </Link>
+                            )}
                         </div>
                     </motion.div>
                 )}

@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Script from "next/script";
+import { usePathname } from "next/navigation";
 import {
     MapPin,
     Phone,
@@ -14,6 +15,11 @@ import {
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
+    const pathname = usePathname();
+
+    if (pathname && pathname.startsWith('/portal')) {
+        return null;
+    }
 
     return (
         <footer className="relative bg-white">
