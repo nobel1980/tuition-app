@@ -26,6 +26,23 @@ jobs:
       - name: 🏗️ Build Project (Static Export)
         run: npm run build
 
+      # NEW STEP: Generates an .htaccess routing fallback file inside the exported folder
+      - name: 🔧 Inject Apache .htaccess Routing Configuration
+        run: |
+          cat << 'EOF' > ./out/.htaccess
+          <IfModule mod_rewrite.c>
+            RewriteEngine On
+            RewriteBase /
+            
+            # If the requested file or directory exists naturally, serve it directly
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteCond %{REQUEST_FILENAME} !-d
+            
+            # Otherwise, route all paths to the root index.html structure for client routing
+            RewriteRule . /index.html [L]
+          </IfModule>
+          EOF
+
       - name: 📂 Sync Files via Secure FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
