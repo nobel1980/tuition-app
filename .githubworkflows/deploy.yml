@@ -36,4 +36,4 @@ jobs:
           security: ftps
           local-dir: ./out/
 
-          server-dir: ./web.ibrahimtuition.co.uk/
+          server-dir: .home/candcltd/web.ibrahimtuition.co.uk/
