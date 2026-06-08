@@ -35,4 +35,5 @@ jobs:
           port: 21
           security: ftps
           local-dir: ./out/
-          server-dir: ./
+
+          server-dir: ./web.ibrahimtuition.co.uk/
