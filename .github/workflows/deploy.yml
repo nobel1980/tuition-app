@@ -52,4 +52,4 @@ jobs:
           port: 21
           security: strict
           local-dir: ./out/
-          server-dir: ./web.ibrahimtuition.co.uk/
+          server-dir: ./
