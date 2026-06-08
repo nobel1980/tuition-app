@@ -35,5 +35,4 @@ jobs:
           port: 21
           security: ftps
           local-dir: ./out/
-
-          server-dir: .home/candcltd/web.ibrahimtuition.co.uk/
+          server-dir: ./web.ibrahimtuition.co.uk/
