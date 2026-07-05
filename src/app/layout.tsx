@@ -1,12 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Dosis } from "next/font/google";
+import { Roboto, Dosis } from "next/font/google";
 import "@/app/globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import CookieBanner from "@/components/layout/CookieBanner";
 import GoogleAnalytics from "@/components/scripts/GoogleAnalytics";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700", "900"],
+  variable: "--font-roboto",
+  display: "swap"
+});
 const dosis = Dosis({ subsets: ["latin"], variable: "--font-dosis", display: "swap" });
 
 export const metadata: Metadata = {
@@ -100,7 +105,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
 
   return (
-    <html lang="en" className={`${inter.variable} ${dosis.variable} scroll-smooth`}>
+    <html lang="en" className={`${roboto.variable} ${dosis.variable} scroll-smooth`}>
       <head>
         <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_ID!} />
         <script
@@ -108,7 +113,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased text-slate-900 bg-white min-h-screen flex flex-col font-inter">
+      <body className="antialiased text-slate-900 bg-white min-h-screen flex flex-col font-roboto">
         <Navbar />
         <main className="flex-grow">{children}</main>
         <Footer />
