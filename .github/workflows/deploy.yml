@@ -1,0 +1,55 @@
+name: 🚀 Deploy Static Next.js to JetHost cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    name: 🎉 Build and Sync
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🚚 Checkout Code
+        uses: actions/checkout@v4.2.2
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4.4.0
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: 📦 Install Dependencies
+        run: npm ci
+
+      - name: 🏗️ Build Project (Static Export)
+        run: npm run build
+
+      # NEW STEP: Generates an .htaccess routing fallback file inside the exported folder
+      - name: 🔧 Inject Apache .htaccess Routing Configuration
+        run: |
+          cat << 'EOF' > ./out/.htaccess
+          <IfModule mod_rewrite.c>
+            RewriteEngine On
+            RewriteBase /
+            
+            # If the requested file or directory exists naturally, serve it directly
+            RewriteCond %{REQUEST_FILENAME} !-f
+            RewriteCond %{REQUEST_FILENAME} !-d
+            
+            # Otherwise, route all paths to the root index.html structure for client routing
+            RewriteRule . /index.html [L]
+          </IfModule>
+          EOF
+
+      - name: 📂 Sync Files via Secure FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          security: strict
+          local-dir: ./out/
+          server-dir: ./

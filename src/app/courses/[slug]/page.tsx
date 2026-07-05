@@ -7,6 +7,13 @@ import TeacherCard from "@/components/courses/sidebar/TeacherCard";
 import RelatedClasses from "@/components/courses/sidebar/RelatedClasses";
 import { User, PoundSterling, CheckCircle2 } from "lucide-react";
 import type { Metadata } from "next";
+import coursesData from "@/data/courses.json";
+
+export async function generateStaticParams() {
+    return coursesData.map((course) => ({
+        slug: course.slug,
+    }));
+}
 
 type Props = {
     params: Promise<{ slug: string }>;

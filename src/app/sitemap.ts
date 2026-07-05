@@ -1,6 +1,8 @@
 import { MetadataRoute } from "next";
 import coursesData from "@/data/courses.json";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = "https://ibrahimtuition.co.uk";
 

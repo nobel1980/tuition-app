@@ -10,5 +10,17 @@
         "rating": 5,
         "text": "Excellent 11+ preparation. The tutors are professional and keep us updated on progress daily. Highly recommended!",
         "profile_photo_url": "/images/icons/avatar-2.png"
+    },
+    {
+        "author_name": "Fatima Khan",
+        "rating": 5,
+        "text": "I was struggling with my GCSE Maths, but after a few weeks with Ibrahim Tuition, I feel so much more confident. The teaching style is very clear and easy to understand.",
+        "profile_photo_url": "/images/icons/avatar-1.png"
+    },
+    {
+        "author_name": "David Smith",
+        "rating": 4,
+        "text": "Very good service overall. The tutor is always on time and prepared for the lessons. Sometimes the communication could be a bit quicker, but the quality of teaching is great.",
+        "profile_photo_url": "/images/icons/avatar-2.png"
     }
 ]

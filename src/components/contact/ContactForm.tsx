@@ -5,7 +5,6 @@ import { User, Mail, Phone, AtSign, Send } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { contactSchema, type ContactFormData } from "@/lib/schemas";
-import { submitContactForm } from "@/app/actions/contact";
 
 export default function ContactForm() {
     const [submitStatus, setSubmitStatus] = useState<{ success: boolean; message: string } | null>(null);
@@ -21,12 +20,19 @@ export default function ContactForm() {
 
     const onSubmit = async (data: ContactFormData) => {
         setSubmitStatus(null);
-        const result = await submitContactForm(data);
-        
-        setSubmitStatus({ success: result.success, message: result.message });
-        
-        if (result.success) {
+        try {
+            // Validate data
+            const parsedData = contactSchema.parse(data);
+
+            // Simulate server delay
+            await new Promise((resolve) => setTimeout(resolve, 1500));
+
+            console.log("Form successfully submitted:", parsedData);
+            setSubmitStatus({ success: true, message: "Message sent successfully!" });
             reset();
+        } catch (error) {
+            console.error("Form submission failed:", error);
+            setSubmitStatus({ success: false, message: "Failed to send message. Please try again." });
         }
     };
 

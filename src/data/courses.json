@@ -2,7 +2,7 @@
     {
         "id": "1",
         "title": "Primary",
-        "slug": "primary-ks2-tuition-london",
+        "slug": "primary",
         "seoTitle": "Primary KS2 Tuition & Exam Prep | London | Ibrahim Tuition",
         "seoDescription": "Expert Primary KS2 tutoring for ages 8-11. Focus on English, Maths, and reasoning to build a strong fundamental basis for future academic success.",
         "ageRange": "8-11 years",
@@ -28,7 +28,7 @@
     {
         "id": "2",
         "title": "11 Plus",
-        "slug": "11-plus-exam-preparation-london",
+        "slug": "11-plus",
         "seoTitle": "11 Plus Exam Preparation & Grammar School Entry | London",
         "seoDescription": "Specialist 11 Plus tutoring in London. We focus on exam techniques, knowledge gaps, and past paper practice for Grammar school success.",
         "ageRange": "8-11 years",
@@ -54,7 +54,7 @@
     {
         "id": "3",
         "title": "A-Level",
-        "slug": "a-level-tutoring-maths-science-london",
+        "slug": "a-level",
         "seoTitle": "A-Level Tutoring | Maths, Biology, Chemistry & Physics | London",
         "seoDescription": "Intensive A-Level support for students aged 11-19. Boost your UCAS predictive grades with tutors from UCL and Imperial College.",
         "ageRange": "11-19 years",
@@ -80,7 +80,7 @@
     {
         "id": "4",
         "title": "GCSE",
-        "slug": "gcse-maths-english-science-london",
+        "slug": "gcse",
         "seoTitle": "GCSE Tutoring London | Achieve Grade 9 in Maths & English",
         "seoDescription": "Professional GCSE tutoring for all core subjects. Personalized learning plans to help students achieve high grades for university admission.",
         "ageRange": "11-19 years",
@@ -105,7 +105,7 @@
     {
         "id": "5",
         "title": "SATS",
-        "slug": "ks2-sats-preparation-classes",
+        "slug": "sats",
         "seoTitle": "KS2 SATS Preparation Classes | Boost Student Confidence",
         "seoDescription": "Targeted SATS support in Reading, Maths, and SPAG. Mock testing and curriculum mastery to ensure high performance in year 6.",
         "ageRange": "11-16 years",
@@ -130,7 +130,7 @@
     {
         "id": "6",
         "title": "Secondary",
-        "slug": "ks3-secondary-school-tutoring",
+        "slug": "secondary",
         "seoTitle": "Secondary KS3 Tutoring | Building Core Academic Strength",
         "seoDescription": "Bridging the gap between Primary and GCSE. Specialist KS3 support based on the National Curriculum for English, Maths, and Science.",
         "ageRange": "11-16 years",
