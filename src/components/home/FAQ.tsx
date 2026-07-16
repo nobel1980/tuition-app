@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import { ChevronDown, Plus, Minus } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Plus, Minus } from "lucide-react";
+import { getFaqs } from "@/lib/clientDb";
 
-const faqData = [
+const fallbackFaqs = [
     {
         id: "panel1",
         question: "How long are the sessions?",
@@ -22,45 +23,68 @@ const faqData = [
 ];
 
 export default function FAQ() {
-    const [openId, setOpenId] = useState<string | null>("panel1");
+    const [faqs, setFaqs] = useState<any[]>(fallbackFaqs);
+    const [openId, setOpenId] = useState<string | number | null>("panel1");
 
-    const toggleFAQ = (id: string) => {
+    useEffect(() => {
+        let active = true;
+        async function loadFaqs() {
+            try {
+                const data = await getFaqs();
+                if (active && Array.isArray(data) && data.length > 0) {
+                    // Map ID if needed, ensuring they correspond
+                    setFaqs(data);
+                }
+            } catch (err) {
+                console.warn("Failed to fetch FAQs from API, using fallback data:", err);
+            }
+        }
+        loadFaqs();
+        return () => {
+            active = false;
+        };
+    }, []);
+
+    const toggleFAQ = (id: string | number) => {
         setOpenId(openId === id ? null : id);
     };
 
     return (
         <div className="space-y-4">
-            {faqData.map((item) => (
-                <div
-                    key={item.id}
-                    className="border border-slate-700 rounded-xl overflow-hidden bg-slate-800/30 transition-all"
-                >
-                    <button
-                        onClick={() => toggleFAQ(item.id)}
-                        className="w-full flex items-center justify-between p-5 text-left hover:bg-slate-700/50 transition-colors"
-                    >
-                        <span className="text-lg font-medium text-white">
-                            {item.question}
-                        </span>
-                        <div className="text-orange-500">
-                            {openId === item.id ? (
-                                <Minus size={20} className="animate-in spin-in-90 duration-300" />
-                            ) : (
-                                <Plus size={20} className="animate-in fade-in duration-300" />
-                            )}
-                        </div>
-                    </button>
-
+            {faqs.map((item) => {
+                const itemId = item.id || item.question;
+                return (
                     <div
-                        className={`overflow-hidden transition-all duration-300 ease-in-out ${openId === item.id ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                            }`}
+                        key={itemId}
+                        className="border border-slate-700 rounded-xl overflow-hidden bg-slate-800/30 transition-all"
                     >
-                        <div className="p-5 pt-0 text-gray-400 leading-relaxed border-t border-slate-700/50 mt-2">
-                            {item.answer}
+                        <button
+                            onClick={() => toggleFAQ(itemId)}
+                            className="w-full flex items-center justify-between p-5 text-left hover:bg-slate-700/50 transition-colors"
+                        >
+                            <span className="text-lg font-medium text-white">
+                                {item.question}
+                            </span>
+                            <div className="text-orange-500">
+                                {openId === itemId ? (
+                                    <Minus size={20} className="animate-in spin-in-90 duration-300" />
+                                ) : (
+                                    <Plus size={20} className="animate-in fade-in duration-300" />
+                                )}
+                            </div>
+                        </button>
+
+                        <div
+                            className={`overflow-hidden transition-all duration-300 ease-in-out ${openId === itemId ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                                }`}
+                        >
+                            <div className="p-5 pt-0 text-gray-400 leading-relaxed border-t border-slate-700/50 mt-2">
+                                {item.answer}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
         </div>
     );
 }

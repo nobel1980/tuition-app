@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { logout } from '@/lib/clientDb';
 import { SidebarProvider, SidebarTrigger, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarHeader, SidebarFooter } from '@/components/ui/sidebar';
-import { Home, Users, BookOpen, Calendar, Settings, LogOut, CheckSquare, GraduationCap, DollarSign, LayoutDashboard } from 'lucide-react';
+import { Home, Users, BookOpen, Calendar, Settings, LogOut, CheckSquare, GraduationCap, DollarSign, LayoutDashboard, HelpCircle, MessageSquare, Award, Book } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import Image from 'next/image';
 
 export default function PortalLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -22,8 +24,18 @@ export default function PortalLayout({ children }: { children: React.ReactNode }
     }
   }, [router]);
 
-  function handleLogout() {
-    localStorage.removeItem('ibt_mock_session');
+  async function handleLogout() {
+    try {
+      await logout();
+    } catch (e) {
+      console.error('Logout API call failed:', e);
+      // Fallback local cleanup in case of API failure
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('ibt_mock_session');
+        document.cookie = "ibt_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+        document.cookie = "ibt_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+      }
+    }
     router.push('/login');
   }
 
@@ -35,16 +47,26 @@ export default function PortalLayout({ children }: { children: React.ReactNode }
     );
   }
 
-  // Role-based navigation
+  // Role-based navigation arrays
   let navItems: { title: string, url: string, icon: any }[] = [];
+  let privateItems: { title: string, url: string, icon: any }[] = [];
+  let publicItems: { title: string, url: string, icon: any }[] = [];
+
   if (session.role === 'admin') {
-    navItems = [
-      { title: 'Dashboard', url: '/portal/admin', icon: LayoutDashboard },
-      { title: 'Students', url: '#', icon: Users },
-      { title: 'Teachers', url: '#', icon: GraduationCap },
-      { title: 'Classes', url: '#', icon: BookOpen },
-      { title: 'Fees', url: '#', icon: DollarSign },
-      { title: 'Settings', url: '#', icon: Settings },
+    privateItems = [
+      { title: 'Overview', url: '/portal/admin?tab=overview', icon: LayoutDashboard },
+      { title: 'Users', url: '/portal/admin?tab=users', icon: Users },
+      { title: 'Students & Fees', url: '/portal/admin?tab=students', icon: DollarSign },
+      { title: 'Classes Roster', url: '/portal/admin?tab=classes', icon: BookOpen },
+    ];
+    publicItems = [
+      { title: 'Courses', url: '/portal/admin?tab=courses', icon: Book },
+      { title: 'Subjects', url: '/portal/admin?tab=subjects', icon: GraduationCap },
+      { title: 'FAQs', url: '/portal/admin?tab=faqs', icon: HelpCircle },
+      { title: 'Reviews', url: '/portal/admin?tab=reviews', icon: MessageSquare },
+      { title: 'Services', url: '/portal/admin?tab=services', icon: Award },
+      { title: 'Teachers', url: '/portal/admin?tab=teachers', icon: Users },
+      { title: 'Site Settings', url: '/portal/admin?tab=settings', icon: Settings },
     ];
   } else if (session.role === 'teacher') {
     navItems = [
@@ -67,27 +89,74 @@ export default function PortalLayout({ children }: { children: React.ReactNode }
       <div className="flex h-screen bg-slate-50 w-full overflow-hidden">
         <Sidebar className="border-r border-slate-200 bg-white">
           <SidebarHeader className="p-4 border-b border-slate-100">
-            <h2 className="text-xl font-black text-blue-900 tracking-tighter">
-              Ibrahim<span className="text-orange-500">Tuition</span>
-            </h2>
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 flex items-center justify-center bg-slate-50/50 rounded-lg border border-slate-100 shadow-sm overflow-hidden">
+                <Image
+                  src="/images/logo.png"
+                  alt="Ibrahim Tuition Logo"
+                  width={26}
+                  height={26}
+                  className="object-contain"
+                />
+              </div>
+              <h2 className="text-lg font-black text-blue-900 tracking-tighter">
+                Ibrahim<span className="text-orange-500">Tuition</span>
+              </h2>
+            </div>
             <p className="text-xs font-semibold text-slate-500 capitalize">{session.role} Portal</p>
           </SidebarHeader>
           <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupLabel>Menu</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {navItems.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton render={<Link href={item.url} />}>
-                        <item.icon className="w-4 h-4" />
-                        <span>{item.title}</span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
+            {session.role === 'admin' ? (
+              <>
+                <SidebarGroup>
+                  <SidebarGroupLabel>Private Management</SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    <SidebarMenu>
+                      {privateItems.map((item) => (
+                        <SidebarMenuItem key={item.title}>
+                          <SidebarMenuButton render={<Link href={item.url} />}>
+                            <item.icon className="w-4 h-4" />
+                            <span>{item.title}</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
+
+                <SidebarGroup>
+                  <SidebarGroupLabel>Public Content</SidebarGroupLabel>
+                  <SidebarGroupContent>
+                    <SidebarMenu>
+                      {publicItems.map((item) => (
+                        <SidebarMenuItem key={item.title}>
+                          <SidebarMenuButton render={<Link href={item.url} />}>
+                            <item.icon className="w-4 h-4" />
+                            <span>{item.title}</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      ))}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </SidebarGroup>
+              </>
+            ) : (
+              <SidebarGroup>
+                <SidebarGroupLabel>Menu</SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {navItems.map((item) => (
+                      <SidebarMenuItem key={item.title}>
+                        <SidebarMenuButton render={<Link href={item.url} />}>
+                          <item.icon className="w-4 h-4" />
+                          <span>{item.title}</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            )}
           </SidebarContent>
           <SidebarFooter className="p-4 border-t border-slate-100">
             <div className="mb-4">

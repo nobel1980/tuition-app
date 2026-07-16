@@ -1,0 +1,44 @@
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
+
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get('ibt_token')?.value;
+  const role = request.cookies.get('ibt_role')?.value;
+  const { pathname } = request.nextUrl;
+
+  // 1. Redirect unauthenticated users away from the portal
+  if (pathname.startsWith('/portal') && !token) {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  // 2. Redirect authenticated users away from the login page to their role-specific dashboard
+  if (pathname === '/login' && token) {
+    const targetDashboard = role ? `/portal/${role}` : '/portal/student';
+    return NextResponse.redirect(new URL(targetDashboard, request.url));
+  }
+
+  // 3. Enforce role-based access for portal subroutes
+  if (token && role) {
+    if (pathname.startsWith('/portal/admin') && role !== 'admin') {
+      return NextResponse.redirect(new URL(`/portal/${role}`, request.url));
+    }
+    if (pathname.startsWith('/portal/teacher') && role !== 'teacher') {
+      return NextResponse.redirect(new URL(`/portal/${role}`, request.url));
+    }
+    if (pathname.startsWith('/portal/student') && role !== 'student') {
+      return NextResponse.redirect(new URL(`/portal/${role}`, request.url));
+    }
+  }
+
+  // 4. Redirect root portal access /portal to the correct role subpath
+  if (pathname === '/portal' || pathname === '/portal/') {
+    const targetDashboard = role ? `/portal/${role}` : '/portal/student';
+    return NextResponse.redirect(new URL(targetDashboard, request.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ['/portal/:path*', '/login'],
+};

@@ -20,6 +20,55 @@
       "email": "john.student@example.com",
       "password": "password123",
       "role": "student"
+    },
+    {
+      "id": "u_admin_maruf",
+      "name": "Maruf Ahmed",
+      "email": "maruf360@yahoo.co.uk",
+      "password": "password123",
+      "role": "admin"
+    },
+    {
+      "id": "u_admin_shahidul",
+      "name": "Shahidul Islam",
+      "email": "nobel.amin@gmail.com",
+      "password": "password123",
+      "role": "admin"
+    },
+    {
+      "id": "u_student_rand1",
+      "name": "Oliver Bennett",
+      "email": "oliver.student@example.com",
+      "password": "password123",
+      "role": "student"
+    },
+    {
+      "id": "u_student_rand2",
+      "name": "Amelia Harrison",
+      "email": "amelia.student@example.com",
+      "password": "password123",
+      "role": "student"
+    },
+    {
+      "id": "u_student_rand3",
+      "name": "Harry Thompson",
+      "email": "harry.student@example.com",
+      "password": "password123",
+      "role": "student"
+    },
+    {
+      "id": "u_student_rand4",
+      "name": "Sophia Jenkins",
+      "email": "sophia.student@example.com",
+      "password": "password123",
+      "role": "student"
+    },
+    {
+      "id": "u_student_rand5",
+      "name": "George Mason",
+      "email": "george.student@example.com",
+      "password": "password123",
+      "role": "student"
     }
   ],
   "students": [
@@ -38,6 +87,86 @@
       "homework": [
         { "id": "hw1", "title": "Algebra Worksheet 1", "url": "#", "status": "Pending" },
         { "id": "hw2", "title": "Geometry Basics", "url": "#", "status": "Completed" }
+      ]
+    },
+    {
+      "id": "s_rand1",
+      "userId": "u_student_rand1",
+      "name": "Oliver Bennett",
+      "level": "GCSE Maths",
+      "progress": 68,
+      "feeStatus": "Paid",
+      "nextLesson": {
+        "time": "2024-05-16T16:00:00Z",
+        "teacher": "Sarah Connor",
+        "link": "https://zoom.us/j/123456789"
+      },
+      "homework": [
+        { "id": "hw_r1_1", "title": "Calculus Quiz", "url": "#", "status": "Pending" }
+      ]
+    },
+    {
+      "id": "s_rand2",
+      "userId": "u_student_rand2",
+      "name": "Amelia Harrison",
+      "level": "GCSE Chemistry",
+      "progress": 85,
+      "feeStatus": "Paid",
+      "nextLesson": {
+        "time": "2024-05-17T17:00:00Z",
+        "teacher": "Sarah Connor",
+        "link": "https://zoom.us/j/123456789"
+      },
+      "homework": [
+        { "id": "hw_r2_1", "title": "Chemical Equation Balancing", "url": "#", "status": "Completed" }
+      ]
+    },
+    {
+      "id": "s_rand3",
+      "userId": "u_student_rand3",
+      "name": "Harry Thompson",
+      "level": "A-Level Physics",
+      "progress": 54,
+      "feeStatus": "Unpaid",
+      "nextLesson": {
+        "time": "2024-05-18T15:00:00Z",
+        "teacher": "Sarah Connor",
+        "link": "https://zoom.us/j/123456789"
+      },
+      "homework": [
+        { "id": "hw_r3_1", "title": "Electromagnetic Induction", "url": "#", "status": "Pending" }
+      ]
+    },
+    {
+      "id": "s_rand4",
+      "userId": "u_student_rand4",
+      "name": "Sophia Jenkins",
+      "level": "11 Plus English",
+      "progress": 92,
+      "feeStatus": "Paid",
+      "nextLesson": {
+        "time": "2024-05-19T10:00:00Z",
+        "teacher": "Sarah Connor",
+        "link": "https://zoom.us/j/123456789"
+      },
+      "homework": [
+        { "id": "hw_r4_1", "title": "Vocabulary Worksheet", "url": "#", "status": "Completed" }
+      ]
+    },
+    {
+      "id": "s_rand5",
+      "userId": "u_student_rand5",
+      "name": "George Mason",
+      "level": "KS3 Science",
+      "progress": 70,
+      "feeStatus": "Paid",
+      "nextLesson": {
+        "time": "2024-05-20T16:00:00Z",
+        "teacher": "Sarah Connor",
+        "link": "https://zoom.us/j/123456789"
+      },
+      "homework": [
+        { "id": "hw_r5_1", "title": "Plant Cells Study", "url": "#", "status": "Completed" }
       ]
     }
   ],
@@ -65,7 +194,7 @@
   ],
   "stats": {
     "totalRevenue": 45000,
-    "totalStudents": 120,
+    "totalStudents": 125,
     "revenueData": [
       { "month": "Jan", "revenue": 4000 },
       { "month": "Feb", "revenue": 3000 },

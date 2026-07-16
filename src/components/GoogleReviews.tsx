@@ -1,15 +1,33 @@
-import { getGoogleReviews } from "@/lib/google-reviews";
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Testimonials from "@/components/home/Testimonials";
 import { Star } from "lucide-react";
 import reviewsFallback from "@/data/reviews.json";
+import { getReviews } from "@/lib/clientDb";
 
-export default async function GoogleReviews() {
-    const data = await getGoogleReviews();
-    
-    // Use real reviews if available, otherwise fallback to local data
-    const reviews = data?.reviews || reviewsFallback;
-    const rating = data?.rating || 5.0;
-    const totalReviews = data?.user_ratings_total || reviewsFallback.length;
+export default function GoogleReviews() {
+    const [reviews, setReviews] = useState<any[]>(reviewsFallback);
+    const rating = 5.0;
+    const totalReviews = reviews.length;
+
+    useEffect(() => {
+        let active = true;
+        async function loadReviews() {
+            try {
+                const data = await getReviews();
+                if (active && Array.isArray(data) && data.length > 0) {
+                    setReviews(data);
+                }
+            } catch (err) {
+                console.warn("Failed to fetch reviews from API, using fallback data:", err);
+            }
+        }
+        loadReviews();
+        return () => {
+            active = false;
+        };
+    }, []);
 
     // Prepare the Rich Schema (JSON-LD) for SEO
     const jsonLd = {
@@ -65,7 +83,7 @@ export default async function GoogleReviews() {
                             <span className="text-2xl font-bold text-white">{rating}</span>
                         </div>
                         <p className="text-slate-400 text-sm font-medium">
-                            Based on {totalReviews} Google Reviews
+                            Based on {totalReviews} Reviews
                         </p>
                     </div>
                 </div>
@@ -74,4 +92,4 @@ export default async function GoogleReviews() {
             </div>
         </section>
     );
-}
+}

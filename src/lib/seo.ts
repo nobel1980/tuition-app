@@ -1,4 +1,6 @@
 import { Metadata } from "next";
+import siteDataFallback from "@/data/site.json";
+import { getSettings } from "@/lib/clientDb";
 
 export const SITE_CONFIG = {
     name: "Ibrahim Tuition",
@@ -17,25 +19,52 @@ export const SITE_CONFIG = {
     }
 };
 
+/**
+ * Fetch dynamic site configuration from database settings, falling back to static files.
+ */
+export async function getLiveSiteConfig() {
+    try {
+        const settings = await getSettings();
+        if (settings && settings.site_settings) {
+            return {
+                ...siteDataFallback,
+                ...settings.site_settings
+            };
+        }
+    } catch (e) {
+        console.warn("Failed to fetch dynamic site config for SEO, falling back to JSON:", e);
+    }
+    return siteDataFallback;
+}
+
+/**
+ * Construct metadata dynamically.
+ */
 export function constructMetadata({
-    title = SITE_CONFIG.name,
-    description = SITE_CONFIG.description,
-    image = SITE_CONFIG.ogImage,
+    title,
+    description,
+    image,
     icons = "/favicon.ico",
     noIndex = false,
+    siteConfig = SITE_CONFIG
 }: {
     title?: string;
     description?: string;
     image?: string;
     icons?: string;
     noIndex?: boolean;
+    siteConfig?: any;
 } = {}): Metadata {
+    const resolvedTitle = title || siteConfig.name;
+    const resolvedDesc = description || siteConfig.description;
+    const resolvedImg = image || siteConfig.ogImage;
+
     return {
         title: {
-            default: title,
-            template: `%s | ${SITE_CONFIG.name}`
+            default: resolvedTitle,
+            template: `%s | ${siteConfig.name}`
         },
-        description,
+        description: resolvedDesc,
         keywords: [
             "11 Plus Tuition London",
             "GCSE Maths Tutor",
@@ -44,21 +73,21 @@ export function constructMetadata({
             "Ibrahim Tuition Centre"
         ],
         openGraph: {
-            title,
-            description,
-            images: [{ url: image }],
+            title: resolvedTitle,
+            description: resolvedDesc,
+            images: [{ url: resolvedImg }],
             type: "website",
-            siteName: SITE_CONFIG.name
+            siteName: siteConfig.name
         },
         twitter: {
             card: "summary_large_image",
-            title,
-            description,
-            images: [image],
+            title: resolvedTitle,
+            description: resolvedDesc,
+            images: [resolvedImg],
             creator: "@ibrahimtuition"
         },
         icons,
-        metadataBase: new URL(SITE_CONFIG.url),
+        metadataBase: new URL(siteConfig.url),
         ...(noIndex && {
             robots: {
                 index: false,
@@ -66,7 +95,7 @@ export function constructMetadata({
             },
         }),
         alternates: {
-            canonical: SITE_CONFIG.url,
+            canonical: siteConfig.url,
         },
         verification: {
             google: "PG0oMfoOTpjDkIXPyG-UqWAqHK44fxsGc20XebY6Ie0",
@@ -74,7 +103,10 @@ export function constructMetadata({
     };
 }
 
-export function getCourseSchema(course: any) {
+/**
+ * Generate Structured Course Schema data dynamically.
+ */
+export function getCourseSchema(course: any, siteConfig: any = SITE_CONFIG) {
     return {
         "@context": "https://schema.org",
         "@type": "Course",
@@ -82,13 +114,13 @@ export function getCourseSchema(course: any) {
         "description": course.overview,
         "provider": {
             "@type": "LocalBusiness",
-            "name": SITE_CONFIG.name,
+            "name": siteConfig.name,
             "address": {
                 "@type": "PostalAddress",
-                "streetAddress": SITE_CONFIG.address.street,
-                "addressLocality": SITE_CONFIG.address.city,
-                "postalCode": SITE_CONFIG.address.postcode,
-                "addressCountry": SITE_CONFIG.address.country
+                "streetAddress": (siteConfig.address?.street || siteConfig.contact?.address?.street || ""),
+                "addressLocality": (siteConfig.address?.city || siteConfig.contact?.address?.city || ""),
+                "postalCode": (siteConfig.address?.postcode || siteConfig.contact?.address?.postcode || ""),
+                "addressCountry": (siteConfig.address?.country || siteConfig.contact?.address?.country || "GB")
             }
         },
         "offers": {

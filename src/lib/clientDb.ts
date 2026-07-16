@@ -1,175 +1,304 @@
-import initialDb from "@/data/mock-db.json";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
-const STORAGE_KEY = "ibt_mock_db";
-
-function getDB() {
-    if (typeof window === "undefined") return initialDb;
-    const data = localStorage.getItem(STORAGE_KEY);
-    if (!data) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(initialDb));
-        return initialDb;
+function getToken() {
+    if (typeof window !== 'undefined') {
+        return localStorage.getItem('ibt_token');
     }
-    return JSON.parse(data);
+    return null;
 }
 
-function saveDB(db: any) {
-    if (typeof window !== "undefined") {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-    }
-}
+async function apiFetch(path: string, options: RequestInit = {}) {
+    const token = getToken();
+    const res = await fetch(`${API_BASE}${path}`, {
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+            ...options.headers,
+        },
+    });
 
-// Simulate latency
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || 'API Request failed');
+    }
+
+    return res.json();
+}
 
 export async function login(email: string, password: string) {
-    await delay(300);
-    const db = getDB();
-    const user = db.users.find((u: any) => u.email === email && u.password === password);
-    if (!user) {
-        throw new Error("Invalid email or password");
+    const data = await apiFetch('/api/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+    });
+
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('ibt_token', data.token);
+        // Set cookies for server-side middleware (1 day expiry)
+        document.cookie = `ibt_token=${data.token}; path=/; max-age=86400; SameSite=Lax`;
+        document.cookie = `ibt_role=${data.user.role}; path=/; max-age=86400; SameSite=Lax`;
     }
-    const { password: _, ...userWithoutPassword } = user;
-    return userWithoutPassword;
+    return data.user;
 }
 
 export async function getUserById(id: string) {
-    await delay(100);
-    const db = getDB();
-    const user = db.users.find((u: any) => u.id === id);
-    if (!user) return null;
-    const { password: _, ...userWithoutPassword } = user;
-    return userWithoutPassword;
+    return apiFetch('/api/user');
 }
 
 export async function getStudentByUserId(userId: string) {
-    await delay(100);
-    const db = getDB();
-    return db.students.find((s: any) => s.userId === userId) || null;
+    return apiFetch('/api/student/profile');
 }
 
 export async function getTeacherByUserId(userId: string) {
-    await delay(100);
-    const db = getDB();
-    return db.teachers.find((t: any) => t.userId === userId) || null;
+    return apiFetch('/api/teacher/schedule');
 }
 
 export async function getAllStudents() {
-    await delay(100);
-    const db = getDB();
-    return db.students;
+    return apiFetch('/api/students');
 }
 
 export async function getAllTeachers() {
-    await delay(100);
-    const db = getDB();
-    return db.teachers;
+    return apiFetch('/api/users').then((users: any[]) => users.filter(u => u.role === 'teacher'));
 }
 
 export async function getAllUsers() {
-    await delay(100);
-    const db = getDB();
-    return db.users.map(({ password, ...u }: any) => u);
+    return apiFetch('/api/users');
 }
 
 export async function getStats() {
-    await delay(100);
-    const db = getDB();
-    return db.stats;
+    return apiFetch('/api/admin/stats');
 }
 
 export async function getClasses() {
-    await delay(100);
-    const db = getDB();
-    return db.classes;
+    return apiFetch('/api/classes');
 }
 
-// --- CRUD Operations ---
-
 export async function createUser(userData: any) {
-    const db = getDB();
-    const id = "u" + Date.now();
-    const newUser = { id, ...userData };
-    db.users.push(newUser);
-    saveDB(db);
-    return newUser;
+    const payload = {
+        name: userData.name,
+        email: userData.email,
+        password: userData.password || 'password123',
+        role: userData.role || 'student',
+    };
+    return apiFetch('/api/users', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+    });
 }
 
 export async function updateUser(id: string, userData: any) {
-    const db = getDB();
-    const index = db.users.findIndex((u: any) => u.id === id);
-    if (index !== -1) {
-        db.users[index] = { ...db.users[index], ...userData };
-        saveDB(db);
-        return db.users[index];
-    }
-    return null;
+    return userData;
 }
 
 export async function deleteUser(id: string) {
-    const db = getDB();
-    db.users = db.users.filter((u: any) => u.id !== id);
-    saveDB(db);
+    return apiFetch(`/api/users/${id}`, {
+        method: 'DELETE',
+    });
 }
 
 export async function createStudent(studentData: any) {
-    const db = getDB();
-    const id = "s" + Date.now();
-    const newStudent = { id, ...studentData };
-    db.students.push(newStudent);
-    saveDB(db);
-    return newStudent;
+    return studentData;
 }
 
 export async function updateStudent(id: string, studentData: any) {
-    const db = getDB();
-    const index = db.students.findIndex((s: any) => s.id === id);
-    if (index !== -1) {
-        db.students[index] = { ...db.students[index], ...studentData };
-        saveDB(db);
-        return db.students[index];
-    }
-    return null;
+    return apiFetch(`/api/students/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(studentData),
+    });
 }
 
 export async function deleteStudent(id: string) {
-    const db = getDB();
-    db.students = db.students.filter((s: any) => s.id !== id);
-    saveDB(db);
+    return apiFetch(`/api/students/${id}`, {
+        method: 'DELETE',
+    });
 }
 
 export async function createClass(classData: any) {
-    const db = getDB();
-    const id = "c" + Date.now();
-    const newClass = { id, ...classData };
-    db.classes.push(newClass);
-    saveDB(db);
-    return newClass;
+    return apiFetch('/api/classes', {
+        method: 'POST',
+        body: JSON.stringify(classData),
+    });
 }
 
 export async function updateClass(id: string, classData: any) {
-    const db = getDB();
-    const index = db.classes.findIndex((c: any) => c.id === id);
-    if (index !== -1) {
-        db.classes[index] = { ...db.classes[index], ...classData };
-        saveDB(db);
-        return db.classes[index];
-    }
-    return null;
+    return classData;
 }
 
 export async function deleteClass(id: string) {
-    const db = getDB();
-    db.classes = db.classes.filter((c: any) => c.id !== id);
-    saveDB(db);
+    return apiFetch(`/api/classes/${id}`, {
+        method: 'DELETE',
+    });
 }
 
 export async function updateTeacher(id: string, teacherData: any) {
-    const db = getDB();
-    const index = db.teachers.findIndex((t: any) => t.id === id);
-    if (index !== -1) {
-        db.teachers[index] = { ...db.teachers[index], ...teacherData };
-        saveDB(db);
-        return db.teachers[index];
+    return apiFetch(`/api/teachers/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(teacherData),
+    });
+}
+
+export async function createTeacher(teacherData: any) {
+    return apiFetch('/api/teachers', {
+        method: 'POST',
+        body: JSON.stringify(teacherData),
+    });
+}
+
+export async function deleteTeacher(id: string) {
+    return apiFetch(`/api/teachers/${id}`, {
+        method: 'DELETE',
+    });
+}
+
+// --- Dynamic Public Content Index (Public) ---
+
+export async function getCourses() {
+    return apiFetch('/api/courses');
+}
+
+export async function getReviews() {
+    return apiFetch('/api/reviews');
+}
+
+export async function getSubjects() {
+    return apiFetch('/api/subjects');
+}
+
+export async function getFaqs() {
+    return apiFetch('/api/faqs');
+}
+
+export async function getServices() {
+    return apiFetch('/api/services');
+}
+
+export async function getSettings() {
+    return apiFetch('/api/settings');
+}
+
+export async function getTeachers() {
+    return apiFetch('/api/teachers');
+}
+
+export async function updateSettings(key: string, value: any) {
+    return apiFetch('/api/settings', {
+        method: 'POST',
+        body: JSON.stringify({ key, value }),
+    });
+}
+
+// --- Dynamic Public Content CRUD (Admin Only) ---
+
+export async function createCourse(courseData: any) {
+    return apiFetch('/api/courses', {
+        method: 'POST',
+        body: JSON.stringify(courseData),
+    });
+}
+
+export async function updateCourse(id: string, courseData: any) {
+    return apiFetch(`/api/courses/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(courseData),
+    });
+}
+
+export async function deleteCourse(id: string) {
+    return apiFetch(`/api/courses/${id}`, {
+        method: 'DELETE',
+    });
+}
+
+export async function createReview(reviewData: any) {
+    return apiFetch('/api/reviews', {
+        method: 'POST',
+        body: JSON.stringify(reviewData),
+    });
+}
+
+export async function updateReview(id: string, reviewData: any) {
+    return apiFetch(`/api/reviews/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(reviewData),
+    });
+}
+
+export async function deleteReview(id: string) {
+    return apiFetch(`/api/reviews/${id}`, {
+        method: 'DELETE',
+    });
+}
+
+export async function createSubject(subjectData: any) {
+    return apiFetch('/api/subjects', {
+        method: 'POST',
+        body: JSON.stringify(subjectData),
+    });
+}
+
+export async function updateSubject(id: string, subjectData: any) {
+    return apiFetch(`/api/subjects/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(subjectData),
+    });
+}
+
+export async function deleteSubject(id: string) {
+    return apiFetch(`/api/subjects/${id}`, {
+        method: 'DELETE',
+    });
+}
+
+export async function createFaq(faqData: any) {
+    return apiFetch('/api/faqs', {
+        method: 'POST',
+        body: JSON.stringify(faqData),
+    });
+}
+
+export async function updateFaq(id: string, faqData: any) {
+    return apiFetch(`/api/faqs/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(faqData),
+    });
+}
+
+export async function deleteFaq(id: string) {
+    return apiFetch(`/api/faqs/${id}`, {
+        method: 'DELETE',
+    });
+}
+
+export async function createService(serviceData: any) {
+    return apiFetch('/api/services', {
+        method: 'POST',
+        body: JSON.stringify(serviceData),
+    });
+}
+
+export async function updateService(id: string, serviceData: any) {
+    return apiFetch(`/api/services/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(serviceData),
+    });
+}
+
+export async function deleteService(id: string) {
+    return apiFetch(`/api/services/${id}`, {
+        method: 'DELETE',
+    });
+}
+
+export async function logout() {
+    try {
+        await apiFetch('/api/logout', { method: 'POST' });
+    } finally {
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('ibt_token');
+            localStorage.removeItem('ibt_mock_session');
+            document.cookie = "ibt_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+            document.cookie = "ibt_role=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax";
+        }
     }
-    return null;
 }

@@ -7,6 +7,7 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from "@/lib/utils";
 import courses from "@/data/courses.json"; // Dynamic import
+import Image from 'next/image';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -38,10 +39,6 @@ export default function Navbar() {
         setPortalUrl(null);
     }, [pathname]);
 
-    if (pathname && pathname.startsWith('/portal')) {
-        return null;
-    }
-
     // 2. Close menus on route change or outside click
     useEffect(() => {
         setIsOpen(false);
@@ -57,6 +54,10 @@ export default function Navbar() {
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    if (pathname && pathname.startsWith('/portal')) {
+        return null;
+    }
 
     const navLinks = [
         { name: 'About', href: '/about' },
@@ -83,7 +84,16 @@ export default function Navbar() {
         )}>
             <div className="container mx-auto px-4 flex justify-between items-center">
                 {/* Logo */}
-                <Link href="/" className="group flex items-center gap-1">
+                <Link href="/" className="group flex items-center gap-2.5">
+                    <div className="h-10 w-10 flex items-center justify-center bg-slate-50/50 rounded-xl border border-slate-100 shadow-sm transition-transform group-hover:scale-105 overflow-hidden">
+                        <Image
+                            src="/images/logo.png"
+                            alt="Ibrahim Tuition Logo"
+                            width={34}
+                            height={34}
+                            className="object-contain"
+                        />
+                    </div>
                     <span className="text-2xl font-black text-blue-900 tracking-tighter transition-transform group-hover:scale-105">
                         Ibrahim<span className="text-orange-500">Tuition</span>
                     </span>

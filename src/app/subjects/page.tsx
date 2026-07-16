@@ -1,6 +1,6 @@
-import SubjectCard from '@/components/subjects/SubjectCard';
-import subjectsData from '@/data/subjects.json';
 import Link from 'next/link';
+import subjectsData from '@/data/subjects.json';
+import SubjectsGrid from './SubjectsGrid';
 
 export default function SubjectsPage() {
     return (
@@ -20,11 +20,7 @@ export default function SubjectsPage() {
             {/* Grid Section */}
             <section className="py-16">
                 <div className="container mx-auto px-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {subjectsData.map((subject) => (
-                            <SubjectCard key={subject.id} subject={subject} />
-                        ))}
-                    </div>
+                    <SubjectsGrid initialSubjects={subjectsData} />
                 </div>
             </section>
         </main>

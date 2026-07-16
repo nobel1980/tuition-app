@@ -11,14 +11,14 @@
         "image": "/images/courses/primary.jpg",
         "ogImage": "/images/og/primary-tuition.jpg",
         "bannerImage": "/images/bg/banner-bg-5.jpg",
-        "overview": "It is the primary set of exams that forms the fundamental basis for your child’s future grade predictions. These exams test core skills and knowledge.",
+        "overview": "Our primary tuition program is tailored for young learners to build solid foundations in English, Mathematics, and logical reasoning. We focus on boosting confidence, nurturing curiosity, and mastering the essential curriculum required for key stage milestones.",
         "subjects": [
             "English",
             "Maths",
             "Verbal reasoning",
             "Non-verbal reasoning"
         ],
-        "description": "We get children up to the correct standard and levels so they are ready for future learning.",
+        "description": "Tailored primary school support focusing on core English, Maths, and reasoning skills to establish a robust foundation for future academic challenges.",
         "fees": {
             "group": "£7.99/hour",
             "oneToOne": "£25/hour"
@@ -37,14 +37,14 @@
         "image": "/images/courses/11plus.jpg",
         "ogImage": "/images/og/11plus-prep.jpg",
         "bannerImage": "/images/bg/banner-bg-5.jpg",
-        "overview": "11 plus is a challenging test which helps students secure a place at grammar schools and high-quality institutions.",
+        "overview": "The 11 Plus exam is a critical milestone for entering grammar and selective schools. Our course features extensive practice with mock exams, verbal and non-verbal reasoning mastery, and advanced exam time-management strategies designed to maximize student performance.",
         "subjects": [
             "English",
             "Maths",
             "Verbal reasoning",
             "Non-verbal reasoning"
         ],
-        "description": "Concentration is placed on exam technique and identifying knowledge gaps.",
+        "description": "Comprehensive preparation for Grammar and Independent school entry, focusing on advanced comprehension, mathematics, and reasoning.",
         "fees": {
             "group": "£7.99/hour",
             "oneToOne": "£25/hour"
@@ -63,14 +63,14 @@
         "image": "/images/courses/alevel.jpg",
         "ogImage": "/images/og/alevel-tuition.jpg",
         "bannerImage": "/images/bg/banner-bg-5.jpg",
-        "overview": "A-Levels are heavy on content and completed quickly compared to GCSE exams. Crucial for University.",
+        "overview": "A-Level qualifications require deep subject mastery and critical thinking skills. We provide expert-led tutoring in Maths and Sciences to help students master complex concepts, ace their practical assessments, and secure top grades needed for leading universities.",
         "subjects": [
             "Biology",
             "Chemistry",
             "Physics",
             "Maths"
         ],
-        "description": "Tutors from UCL and Imperial help boost UCAS predictive grades.",
+        "description": "Rigorous academic mentoring in Mathematics, Biology, Chemistry, and Physics to secure top UCAS grades and university placements.",
         "fees": {
             "group": "£12.99/hour",
             "oneToOne": "£35/hour"
@@ -89,15 +89,15 @@
         "image": "/images/courses/gcse.jpg",
         "ogImage": "/images/og/gcse-london.jpg",
         "bannerImage": "/images/bg/banner-bg-5.jpg",
-        "overview": "Success in GCSE Maths and English is pivotal for employment and further education in the UK.",
+        "overview": "Our GCSE classes cover core subjects (Maths, English, Science) with a strong emphasis on exam board specifications, question analysis, and high-scoring techniques. We help students bridge knowledge gaps and transition successfully to post-16 education.",
         "subjects": [
             "English",
             "Maths",
             "Science"
         ],
-        "description": "Focused teaching to help students reach Grade 9.",
+        "description": "Targeted GCSE preparation focusing on exam techniques, syllabus mastery, and grade improvement for core subjects.",
         "fees": {
-            "group": "£10.10.99/hour",
+            "group": "£10.99/hour",
             "oneToOne": "£30/hour"
         },
         "teacherId": "t1"
@@ -114,13 +114,13 @@
         "image": "/images/courses/sats.jpg",
         "ogImage": "/images/og/sats-prep.jpg",
         "bannerImage": "/images/bg/banner-bg-5.jpg",
-        "overview": "SATS are key indicators of progress at the end of Key Stages. We provide targeted support.",
+        "overview": "Key Stage 2 SATS measure academic progress and determine secondary school streaming. Our classes demystify the exams through mock tests, focused SPAG (Spelling, Punctuation, and Grammar) reviews, and mathematics drills that build exam-day confidence.",
         "subjects": [
             "Reading",
             "Maths",
             "SPAG"
         ],
-        "description": "Building confidence through mock testing and curriculum mastery.",
+        "description": "Focused Year 6 SATs prep to boost performance in Reading, Mathematics, Spelling, Punctuation, and Grammar.",
         "fees": {
             "group": "£7.99/hour",
             "oneToOne": "£25/hour"
@@ -139,13 +139,13 @@
         "image": "/images/courses/secondary.jpg",
         "ogImage": "/images/og/secondary-ks3.jpg",
         "bannerImage": "/images/bg/banner-bg-5.jpg",
-        "overview": "Secondary education bridges the gap between Primary and GCSE. We focus on core strength.",
+        "overview": "Key Stage 3 secondary education sets the stage for GCSE success. We focus on consolidating core academic skills in English literature and language, algebraic maths, and introductory sciences, ensuring students are confident and ahead of their school curriculum.",
         "subjects": [
             "English",
             "Maths",
             "Science"
         ],
-        "description": "Tailored materials for KS3 students based on the National Curriculum.",
+        "description": "Key Stage 3 academic strengthening designed to build confidence in core subjects and ease the transition to GCSE levels.",
         "fees": {
             "group": "£7.99/hour",
             "oneToOne": "£25/hour"

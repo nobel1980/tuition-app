@@ -1,0 +1,43 @@
+{
+  "name": "Ibrahim Tuition",
+  "companyName": "Ibrahim Tuition Centre Ltd",
+  "tagline": "Empowering Students for Success",
+  "description": "Ibrahim Tuition offers tailored learning in Maths, English, and Science. Specializing in 11 Plus, GCSE, and SATS preparation in Stepney Green, London.",
+  "url": "https://ibrahimtuition.co.uk",
+  "ogImage": "https://ibrahimtuition.co.uk/images/og-main.jpg",
+  "logo": "https://ibrahimtuition.co.uk/images/logo.png",
+  "footerLogo": "/images/footer-logo.png",
+  "contact": {
+    "phone": "+44 7723001329",
+    "email": "info@ibrahimtuition.co.uk",
+    "address": {
+      "street": "24-30 Assembly Passage",
+      "locality": "Stepney Green",
+      "city": "London",
+      "postcode": "E1 4UT",
+      "country": "GB",
+      "latitude": 51.5225,
+      "longitude": -0.0461
+    }
+  },
+  "hours": {
+    "display": "Mon - Sun: 09:00 - 18:00",
+    "opens": "09:00",
+    "closes": "20:00",
+    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+  },
+  "socials": {
+    "twitter": "https://twitter.com/ibrahimtuition",
+    "facebook": "https://www.facebook.com/IbrahimTuition.co.uk/"
+  },
+  "seo": {
+    "keywords": [
+      "11 Plus Tuition London",
+      "GCSE Maths Tutor",
+      "Primary Tutoring Stepney Green",
+      "KS2 SATS Preparation",
+      "Ibrahim Tuition Centre"
+    ],
+    "googleVerification": "PG0oMfoOTpjDkIXPyG-UqWAqHK44fxsGc20XebY6Ie0"
+  }
+}

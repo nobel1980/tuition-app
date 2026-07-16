@@ -1,13 +1,17 @@
-import { constructMetadata } from "@/lib/seo";
+import { constructMetadata, getLiveSiteConfig } from "@/lib/seo";
 import coursesData from "@/data/courses.json";
-import CourseCard from "@/components/home/CourseCard";
+import CoursesGrid from "./CoursesGrid";
 import Breadcrumbs from "@/components/layout/Breadcrumbs";
 import Image from "next/image";
 
-export const metadata = constructMetadata({
-    title: "Our Classes",
-    description: "Explore our tailored classes for 11 Plus, GCSE, and primary level students in London."
-});
+export async function generateMetadata() {
+    const siteConfig = await getLiveSiteConfig();
+    return constructMetadata({
+        title: "Our Classes",
+        description: "Explore our tailored classes for 11 Plus, GCSE, and primary level students in London.",
+        siteConfig
+    });
+}
 
 export default function CoursesPage() {
     return (
@@ -41,11 +45,7 @@ export default function CoursesPage() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {coursesData.map((course) => (
-                            <CourseCard key={course.id} course={course} />
-                        ))}
-                    </div>
+                    <CoursesGrid initialCourses={coursesData} />
                 </div>
             </section>
         </main>

@@ -4,6 +4,35 @@
     "name": "Maruf Ahmed",
     "role": "Lead Education Specialist",
     "image": "/images/team/maruf.jpg",
-    "bio": "Over ten years' experience as a specialist in education. Dedicated to helping students reach their full potential through personalized and engaging teaching methods."
+    "bio": "Over ten years' experience as a specialist in education. Dedicated to helping students reach their full potential through personalized and engaging teaching methods.",
+    "subject_tags": ["Maths", "Chemistry"],
+    "status": "published"
+  },
+  {
+    "id": "t2",
+    "name": "Sarah Jenkins",
+    "role": "GCSE Science Coordinator",
+    "image": "/images/team/sarah.jpg",
+    "bio": "Specialist in secondary science education. Focused on bringing complex Physics and Biology concepts to life.",
+    "subject_tags": ["Biology", "Physics", "Science"],
+    "status": "published"
+  },
+  {
+    "id": "t3",
+    "name": "David Vance",
+    "role": "Head of English Literature",
+    "image": "/images/team/david.jpg",
+    "bio": "Passionate about literature and language. Dedicated to helping students excel in critical reading, comprehension, and analytical essay writing.",
+    "subject_tags": ["English", "Verbal Reasoning"],
+    "status": "published"
+  },
+  {
+    "id": "t4",
+    "name": "Dr. Amina Patel",
+    "role": "Advanced Maths Lecturer",
+    "image": "/images/team/amina.jpg",
+    "bio": "Holds a PhD in Mathematics. Specialized in teaching advanced calculus, algebra, and preparing candidates for competitive university entries.",
+    "subject_tags": ["Maths", "Further Maths"],
+    "status": "published"
   }
 ]

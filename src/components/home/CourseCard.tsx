@@ -11,6 +11,7 @@ interface Course {
     rating: number;
     image: string;
     subjects: string[];
+    description?: string;
 }
 
 export default function CourseCard({ course }: { course: Course }) {
@@ -23,7 +24,7 @@ export default function CourseCard({ course }: { course: Course }) {
                 </div>
 
                 <Image
-                    src={course.image}
+                    src={course.image || "/images/courses/primary.jpg"}
                     alt={course.title}
                     fill
                     className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -54,6 +55,12 @@ export default function CourseCard({ course }: { course: Course }) {
                         {course.ageRange}
                     </span>
                 </div>
+
+                {course.description && (
+                    <p className="text-sm text-slate-500 mb-4 line-clamp-2 leading-relaxed">
+                        {course.description}
+                    </p>
+                )}
 
                 <ul className="text-sm text-slate-500 mb-6 space-y-1 flex-grow">
                     {course.subjects.slice(0, 3).map((subject, index) => (

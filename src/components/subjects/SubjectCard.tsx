@@ -21,7 +21,7 @@ export default function SubjectCard({ subject }: SubjectProps) {
         <div className="bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 flex flex-col h-full transition-all hover:shadow-2xl">
             <div className="relative h-52 w-full">
                 <Image
-                    src={subject.image}
+                    src={subject.image || "/images/service/2.jpg"}
                     alt={subject.title}
                     fill
                     className="object-cover"
